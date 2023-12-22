@@ -13,12 +13,19 @@ namespace Cinema.Controllers
 {
     public class MovieController : Controller
     {
-        private CinemaContext db = new CinemaContext();
+        //private CinemaContext db = new CinemaContext();
+        private readonly GenericRepository<Movie> repo;
+        public MovieController()
+        {
+            repo = new GenericRepository<Movie>(new CinemaContext());
+        }
+
 
         // GET: Movie
         public ActionResult Index()
         {
-            return View(db.Movies.ToList());
+            //return View(db.Movies.ToList());
+            return View(repo.GetAll());
         }
 
         // GET: Movie/Details/5
@@ -28,7 +35,8 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Movie movie = db.Movies.Find(id);
+            //Movie movie = db.Movies.Find(id);
+            Movie movie = repo.GetById(id);
             if (movie == null)
             {
                 return HttpNotFound();
@@ -51,8 +59,10 @@ namespace Cinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Movies.Add(movie);
-                db.SaveChanges();
+                //db.Movies.Add(movie);
+                //db.SaveChanges();
+                repo.Insert(movie);
+                repo.Save();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +76,8 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Movie movie = db.Movies.Find(id);
+            //Movie movie = db.Movies.Find(id);
+            Movie movie = repo.GetById(id);
             if (movie == null)
             {
                 return HttpNotFound();
@@ -83,8 +94,10 @@ namespace Cinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(movie).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(movie).State = EntityState.Modified;
+                //db.SaveChanges();
+                repo.Update(movie);
+                repo.Save();
                 return RedirectToAction("Index");
             }
             return View(movie);
@@ -97,7 +110,8 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Movie movie = db.Movies.Find(id);
+            //Movie movie = db.Movies.Find(id);
+            Movie movie = repo.GetById(id);
             if (movie == null)
             {
                 return HttpNotFound();
@@ -110,9 +124,11 @@ namespace Cinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Movie movie = db.Movies.Find(id);
-            db.Movies.Remove(movie);
-            db.SaveChanges();
+            //Movie movie = db.Movies.Find(id);
+            //db.Movies.Remove(movie);
+            //db.SaveChanges();
+            repo.Delete(id);
+            repo.Save();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +136,8 @@ namespace Cinema.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
+                repo.Dispose();
             }
             base.Dispose(disposing);
         }
