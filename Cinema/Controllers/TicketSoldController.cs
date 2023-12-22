@@ -15,22 +15,22 @@ namespace Cinema.Controllers
     public class TicketSoldController : Controller
     {
         //private CinemaContext db = new CinemaContext();
-        private readonly GenericRepository<TicketSold> repo;
-        private readonly GenericRepository<CashRegister> cashRegisterRepo;
-        private readonly GenericRepository<Session> sessionRepo;
+        private readonly GenericRepository<TicketSold> repo; 
+        private readonly GenericRepository<CashRegister> cashRegisterRepo; 
+        private readonly GenericRepository<Session> sessionRepo; 
 
-        public TicketSoldController()
+        public TicketSoldController() 
         {
-            repo = new GenericRepository<TicketSold>(new CinemaContext());
-            cashRegisterRepo = new GenericRepository<CashRegister>(new CinemaContext());
-            sessionRepo = new GenericRepository<Session>(new CinemaContext());
+            repo = new GenericRepository<TicketSold>(new CinemaContext()); 
+            cashRegisterRepo = new GenericRepository<CashRegister>(new CinemaContext()); 
+            sessionRepo = new GenericRepository<Session>(new CinemaContext()); 
         }
 
         // GET: TicketSold
         public ActionResult Index()
         {
             //var ticketSolds = db.TicketSolds.Include(t => t.CashRegister).Include(t => t.Session);
-            return View(repo.GetAll().Include(t => t.CashRegister).Include(t => t.Session).ToList());
+            return View(repo.GetAll().Include(t => t.CashRegister).Include(t => t.Session).ToList()); 
         }
 
         // GET: TicketSold/Details/5
@@ -41,7 +41,7 @@ namespace Cinema.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //TicketSold ticketSold = db.TicketSolds.Find(id);
-            TicketSold ticketSold = repo.GetById(id);
+            TicketSold ticketSold = repo.GetById(id); 
             if (ticketSold == null)
             {
                 return HttpNotFound();
@@ -54,9 +54,9 @@ namespace Cinema.Controllers
         {
             //ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Id");
             //ViewBag.SessionId = new SelectList(db.Sessions, "Id", "Id");
-            ViewBag.CashRegisterId = new SelectList(cashRegisterRepo.GetAll(), "Id", "Id");
-            ViewBag.SessionId = new SelectList(sessionRepo.GetAll(), "Id", "Id");
-            return View();
+            ViewBag.CashRegisterId = new SelectList(cashRegisterRepo.GetAll(), "Id", "Id"); 
+            ViewBag.SessionId = new SelectList(sessionRepo.GetAll(), "Id", "Id"); 
+            return View(); 
         }
 
         // POST: TicketSold/Create
@@ -70,15 +70,15 @@ namespace Cinema.Controllers
             {
                 //db.TicketSolds.Add(ticketSold);
                 //db.SaveChanges();
-                repo.Insert(ticketSold);
-                repo.Save();
+                repo.Insert(ticketSold); 
+                repo.Save(); 
                 return RedirectToAction("Index");
             }
 
             //ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Id", ticketSold.CashRegisterId);
             //ViewBag.SessionId = new SelectList(db.Sessions, "Id", "Id", ticketSold.SessionId);
-            ViewBag.CashRegisterId = new SelectList(cashRegisterRepo.GetAll(), "Id", "Id", ticketSold.CashRegisterId);
-            ViewBag.SessionId = new SelectList(sessionRepo.GetAll(), "Id", "Id", ticketSold.SessionId);
+            ViewBag.CashRegisterId = new SelectList(cashRegisterRepo.GetAll(), "Id", "Id", ticketSold.CashRegisterId); 
+            ViewBag.SessionId = new SelectList(sessionRepo.GetAll(), "Id", "Id", ticketSold.SessionId); 
             return View(ticketSold);
         }
 
@@ -90,15 +90,15 @@ namespace Cinema.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //TicketSold ticketSold = db.TicketSolds.Find(id);
-            TicketSold ticketSold = repo.GetById(id);
+            TicketSold ticketSold = repo.GetById(id); 
             if (ticketSold == null)
             {
                 return HttpNotFound();
             }
             //ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Id", ticketSold.CashRegisterId);
             //ViewBag.SessionId = new SelectList(db.Sessions, "Id", "Id", ticketSold.SessionId);
-            ViewBag.CashRegisterId = new SelectList(cashRegisterRepo.GetAll(), "Id", "Id", ticketSold.CashRegisterId);
-            ViewBag.SessionId = new SelectList(sessionRepo.GetAll(), "Id", "Id", ticketSold.SessionId);
+            ViewBag.CashRegisterId = new SelectList(cashRegisterRepo.GetAll(), "Id", "Id", ticketSold.CashRegisterId); 
+            ViewBag.SessionId = new SelectList(sessionRepo.GetAll(), "Id", "Id", ticketSold.SessionId); 
             return View(ticketSold);
         }
 
@@ -113,14 +113,14 @@ namespace Cinema.Controllers
             {
                 //db.Entry(ticketSold).State = EntityState.Modified;
                 //db.SaveChanges();
-                repo.Update(ticketSold);
-                repo.Save();
+                repo.Update(ticketSold); 
+                repo.Save(); 
                 return RedirectToAction("Index");
             }
             //ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Id", ticketSold.CashRegisterId);
             //ViewBag.SessionId = new SelectList(db.Sessions, "Id", "Id", ticketSold.SessionId);
-            ViewBag.CashRegisterId = new SelectList(cashRegisterRepo.GetAll(), "Id", "Id", ticketSold.CashRegisterId);
-            ViewBag.SessionId = new SelectList(sessionRepo.GetAll(), "Id", "Id", ticketSold.SessionId);
+            ViewBag.CashRegisterId = new SelectList(cashRegisterRepo.GetAll(), "Id", "Id", ticketSold.CashRegisterId); 
+            ViewBag.SessionId = new SelectList(sessionRepo.GetAll(), "Id", "Id", ticketSold.SessionId); 
             return View(ticketSold);
         }
 
@@ -132,7 +132,7 @@ namespace Cinema.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //TicketSold ticketSold = db.TicketSolds.Find(id);
-            TicketSold ticketSold = repo.GetById(id);
+            TicketSold ticketSold = repo.GetById(id); 
             if (ticketSold == null)
             {
                 return HttpNotFound();
@@ -148,8 +148,8 @@ namespace Cinema.Controllers
             //TicketSold ticketSold = db.TicketSolds.Find(id);
             //db.TicketSolds.Remove(ticketSold);
             //db.SaveChanges();
-            repo.Delete(id);
-            repo.Save();
+            repo.Delete(id); 
+            repo.Save(); 
             return RedirectToAction("Index");
         }
 
@@ -158,7 +158,7 @@ namespace Cinema.Controllers
             if (disposing)
             {
                 //db.Dispose();
-                repo.Dispose();
+                repo.Dispose(); 
             }
             base.Dispose(disposing);
         }

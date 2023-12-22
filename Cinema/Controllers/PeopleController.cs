@@ -27,7 +27,7 @@ namespace Cinema.Controllers
         public ActionResult Index()
         {
             //var peoples = db.Peoples.Include(p => p.TicketSold);
-            return View(repo.GetAll().Include(p => p.TicketSold).ToList());
+            return View(repo.GetAll().Include(p => p.TicketSold).ToList()); 
         }
 
         // GET: People/Details/5
@@ -38,7 +38,7 @@ namespace Cinema.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //People people = db.Peoples.Find(id);
-            People people = repo.GetById(id);
+            People people = repo.GetById(id); 
             if (people == null)
             {
                 return HttpNotFound();
@@ -50,7 +50,7 @@ namespace Cinema.Controllers
         public ActionResult Create()
         {
             // ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id");
-            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id");
+            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id"); 
             return View();
         }
 
@@ -66,19 +66,13 @@ namespace Cinema.Controllers
                 //db.Peoples.Add(people);
                 //db.SaveChanges();
                 //return RedirectToAction("Index");
-
-                //people.TicketSold = peopleTicketSold;
-                //repo.Insert(people);
-                //TicketRepo.Insert(peopleTicketSold);
-                //repo.Save();
-                //TicketRepo.Save();
-                repo.Insert(people);
-                repo.Save();
+                repo.Insert(people); 
+                repo.Save(); 
                 return RedirectToAction("Index");
             }
 
             //ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id", people.Id);
-            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id", people.Id);
+            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id", people.Id); 
             return View(people);
         }
 
@@ -90,13 +84,13 @@ namespace Cinema.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //People people = db.Peoples.Find(id);
-            People people = repo.GetById(id);
+            People people = repo.GetById(id); 
             if (people == null)
             {
                 return HttpNotFound();
             }
             //ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id", people.Id);
-            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id", people.Id);
+            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id", people.Id); 
 
             return View(people);
         }
@@ -112,12 +106,12 @@ namespace Cinema.Controllers
             {
                 //db.Entry(people).State = EntityState.Modified;
                 //db.SaveChanges();
-                repo.Update(people);
-                repo.Save();
+                repo.Update(people); 
+                repo.Save(); 
                 return RedirectToAction("Index");
             }
             //ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id", people.Id);
-            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id", people.Id);
+            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id", people.Id); 
             return View(people);
         }
 
@@ -129,7 +123,7 @@ namespace Cinema.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //People people = db.Peoples.Find(id);
-            People people = repo.GetById(id);
+            People people = repo.GetById(id); 
             if (people == null)
             {
                 return HttpNotFound();
@@ -145,8 +139,8 @@ namespace Cinema.Controllers
             //People people = db.Peoples.Find(id);
             //db.Peoples.Remove(people);
             //db.SaveChanges();
-            repo.Delete(id);
-            repo.Save();
+            repo.Delete(id); 
+            repo.Save(); 
             return RedirectToAction("Index");
         }
 
@@ -155,7 +149,7 @@ namespace Cinema.Controllers
             if (disposing)
             {
                 //db.Dispose();
-                repo.Dispose();
+                repo.Dispose(); 
             }
             base.Dispose(disposing);
         }

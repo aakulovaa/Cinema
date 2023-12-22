@@ -25,7 +25,7 @@ namespace Cinema.Controllers
         public ActionResult Index()
         {
             //return View(db.Movies.ToList());
-            return View(repo.GetAll());
+            return View(repo.GetAll()); 
         }
 
         // GET: Movie/Details/5
@@ -36,7 +36,7 @@ namespace Cinema.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //Movie movie = db.Movies.Find(id);
-            Movie movie = repo.GetById(id);
+            Movie movie = repo.GetById(id); 
             if (movie == null)
             {
                 return HttpNotFound();
@@ -61,8 +61,8 @@ namespace Cinema.Controllers
             {
                 //db.Movies.Add(movie);
                 //db.SaveChanges();
-                repo.Insert(movie);
-                repo.Save();
+                repo.Insert(movie); 
+                repo.Save(); 
                 return RedirectToAction("Index");
             }
 
@@ -77,7 +77,7 @@ namespace Cinema.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //Movie movie = db.Movies.Find(id);
-            Movie movie = repo.GetById(id);
+            Movie movie = repo.GetById(id); 
             if (movie == null)
             {
                 return HttpNotFound();
@@ -96,8 +96,8 @@ namespace Cinema.Controllers
             {
                 //db.Entry(movie).State = EntityState.Modified;
                 //db.SaveChanges();
-                repo.Update(movie);
-                repo.Save();
+                repo.Update(movie); 
+                repo.Save(); 
                 return RedirectToAction("Index");
             }
             return View(movie);
@@ -111,7 +111,7 @@ namespace Cinema.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //Movie movie = db.Movies.Find(id);
-            Movie movie = repo.GetById(id);
+            Movie movie = repo.GetById(id); 
             if (movie == null)
             {
                 return HttpNotFound();
@@ -127,8 +127,8 @@ namespace Cinema.Controllers
             //Movie movie = db.Movies.Find(id);
             //db.Movies.Remove(movie);
             //db.SaveChanges();
-            repo.Delete(id);
-            repo.Save();
+            repo.Delete(id); 
+            repo.Save(); 
             return RedirectToAction("Index");
         }
 
@@ -137,7 +137,7 @@ namespace Cinema.Controllers
             if (disposing)
             {
                 //db.Dispose();
-                repo.Dispose();
+                repo.Dispose(); 
             }
             base.Dispose(disposing);
         }
