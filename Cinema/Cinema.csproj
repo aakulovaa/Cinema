@@ -136,6 +136,7 @@
     <Compile Include="Controllers\TicketSoldController.cs" />
     <Compile Include="DAL\CinemaContext.cs" />
     <Compile Include="DAL\CinemaInitializer.cs" />
+    <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
