@@ -13,13 +13,21 @@ namespace Cinema.Controllers
 {
     public class PeopleController : Controller
     {
-        private CinemaContext db = new CinemaContext();
+        //private CinemaContext db = new CinemaContext();
+        private readonly GenericRepository<People> repo;
+        private readonly GenericRepository<TicketSold> TicketRepo;
+
+        public PeopleController()
+        {
+            repo = new GenericRepository<People>(new CinemaContext());
+            TicketRepo = new GenericRepository<TicketSold>(new CinemaContext());
+        }
 
         // GET: People
         public ActionResult Index()
         {
-            var peoples = db.Peoples.Include(p => p.TicketSold);
-            return View(peoples.ToList());
+            //var peoples = db.Peoples.Include(p => p.TicketSold);
+            return View(repo.GetAll().Include(p => p.TicketSold).ToList());
         }
 
         // GET: People/Details/5
@@ -29,7 +37,8 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            People people = db.Peoples.Find(id);
+            //People people = db.Peoples.Find(id);
+            People people = repo.GetById(id);
             if (people == null)
             {
                 return HttpNotFound();
@@ -40,7 +49,8 @@ namespace Cinema.Controllers
         // GET: People/Create
         public ActionResult Create()
         {
-            ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id");
+            // ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id");
+            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id");
             return View();
         }
 
@@ -53,12 +63,16 @@ namespace Cinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Peoples.Add(people);
-                db.SaveChanges();
+                //db.Peoples.Add(people);
+                //db.SaveChanges();
+                //return RedirectToAction("Index");
+                repo.Insert(people);
+                repo.Save();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id", people.Id);
+            //ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id", people.Id);
+            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id", people.Id);
             return View(people);
         }
 
@@ -69,12 +83,14 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            People people = db.Peoples.Find(id);
+            //People people = db.Peoples.Find(id);
+            People people = repo.GetById(id);
             if (people == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id", people.Id);
+            //ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id", people.Id);
+            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id", people.Id);
             return View(people);
         }
 
@@ -87,11 +103,14 @@ namespace Cinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(people).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(people).State = EntityState.Modified;
+                //db.SaveChanges();
+                repo.Update(people);
+                repo.Save();
                 return RedirectToAction("Index");
             }
-            ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id", people.Id);
+            //ViewBag.Id = new SelectList(db.TicketSolds, "Id", "Id", people.Id);
+            ViewBag.Id = new SelectList(TicketRepo.GetAll(), "Id", "Id", people.Id);
             return View(people);
         }
 
@@ -102,7 +121,8 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            People people = db.Peoples.Find(id);
+            //People people = db.Peoples.Find(id);
+            People people = repo.GetById(id);
             if (people == null)
             {
                 return HttpNotFound();
@@ -115,9 +135,11 @@ namespace Cinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            People people = db.Peoples.Find(id);
-            db.Peoples.Remove(people);
-            db.SaveChanges();
+            //People people = db.Peoples.Find(id);
+            //db.Peoples.Remove(people);
+            //db.SaveChanges();
+            repo.Delete(id);
+            repo.Save();
             return RedirectToAction("Index");
         }
 
@@ -125,7 +147,8 @@ namespace Cinema.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
+                repo.Dispose();
             }
             base.Dispose(disposing);
         }

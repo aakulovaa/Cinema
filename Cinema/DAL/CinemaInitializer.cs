@@ -66,11 +66,11 @@ namespace Cinema.DAL
             context.SaveChanges();
             var peoples = new List<People>
             {
-                new People { FirstName = "Даниил", LastName = "Николаев" },
-                new People { FirstName ="Кирилл", LastName = "Громов" },
-                new People { FirstName = "Амина", LastName = "Смирнова" },
-                new People { FirstName = "Ксения", LastName = "Рябинина" },
-                new People { FirstName = "Роман", LastName = "Маслов" },
+                new People { Id = 1, FirstName = "Даниил", LastName = "Николаев" },
+                new People { Id = 2, FirstName ="Кирилл", LastName = "Громов" },
+                new People { Id = 3, FirstName = "Амина", LastName = "Смирнова" },
+                new People { Id = 4, FirstName = "Ксения", LastName = "Рябинина" },
+                new People { Id = 5, FirstName = "Роман", LastName = "Маслов" },
 
             };
             peoples.ForEach(s => context.Peoples.Add(s));
