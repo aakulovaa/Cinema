@@ -23,12 +23,19 @@ namespace Cinema.DAL
 
         protected override void OnModelCreating(DbModelBuilder optionsBuilder)
         {
-            // CashRegister has many TicketSolds
-            optionsBuilder.Entity<CashRegister>()
-            .HasMany(cr => cr.TicketSolds)
-            .WithRequired(ts => ts.CashRegister)
-            .HasForeignKey(ts => ts.CashRegisterId)
-            .WillCascadeOnDelete(true);
+            //// CashRegister has many TicketSolds
+            ///
+            //optionsBuilder.Entity<CashRegister>()
+            //.HasMany(cr => cr.TicketSolds)
+            //.WithRequired(ts => ts.CashRegister)
+            //.HasForeignKey(ts => ts.CashRegisterId)
+            //.WillCascadeOnDelete(true);
+
+            optionsBuilder.Entity<TicketSold>()
+           .HasRequired(s => s.CashRegister)
+           .WithMany(m => m.TicketSolds)
+           .HasForeignKey(s => s.CashRegisterId)
+           .WillCascadeOnDelete(true);
 
 
             // Session has one Movie
@@ -48,11 +55,18 @@ namespace Cinema.DAL
 
 
             // Session has many TicketSolds
-            optionsBuilder.Entity<Session>()
-            .HasMany(s => s.TicketSolds)
-            .WithRequired(ts => ts.Session)
-            .HasForeignKey(ts => ts.SessionId)
-            .WillCascadeOnDelete(true);
+
+            //optionsBuilder.Entity<Session>()
+            //.HasMany(s => s.TicketSolds)
+            //.WithRequired(ts => ts.Session)
+            //.HasForeignKey(ts => ts.SessionId)
+            //.WillCascadeOnDelete(true);
+
+            optionsBuilder.Entity<TicketSold>()
+           .HasRequired(s => s.Session)
+           .WithMany(m => m.TicketSolds)
+           .HasForeignKey(s => s.SessionId)
+           .WillCascadeOnDelete(true);
 
 
             // Session has many Peoples
