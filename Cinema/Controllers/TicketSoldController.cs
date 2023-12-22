@@ -40,7 +40,7 @@ namespace Cinema.Controllers
         // GET: TicketSold/Create
         public ActionResult Create()
         {
-            ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Employee");
+            ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Id");
             ViewBag.SessionId = new SelectList(db.Sessions, "Id", "Id");
             return View();
         }
@@ -59,7 +59,7 @@ namespace Cinema.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Employee", ticketSold.CashRegisterId);
+            ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Id", ticketSold.CashRegisterId);
             ViewBag.SessionId = new SelectList(db.Sessions, "Id", "Id", ticketSold.SessionId);
             return View(ticketSold);
         }
@@ -76,7 +76,7 @@ namespace Cinema.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Employee", ticketSold.CashRegisterId);
+            ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Id", ticketSold.CashRegisterId);
             ViewBag.SessionId = new SelectList(db.Sessions, "Id", "Id", ticketSold.SessionId);
             return View(ticketSold);
         }
@@ -94,7 +94,7 @@ namespace Cinema.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Employee", ticketSold.CashRegisterId);
+            ViewBag.CashRegisterId = new SelectList(db.CashRegisters, "Id", "Id", ticketSold.CashRegisterId);
             ViewBag.SessionId = new SelectList(db.Sessions, "Id", "Id", ticketSold.SessionId);
             return View(ticketSold);
         }
