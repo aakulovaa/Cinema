@@ -13,18 +13,12 @@ namespace Cinema.Controllers
 {
     public class CashRegisterController : Controller
     {
-        //private CinemaContext db = new CinemaContext();
-        private readonly GenericRepository<CashRegister> repo;
-        public CashRegisterController()
-        {
-            repo = new GenericRepository<CashRegister>(new CinemaContext());
-        }
+        private CinemaContext db = new CinemaContext();
 
         // GET: CashRegister
         public ActionResult Index()
         {
-            //return View(db.CashRegisters.ToList());
-            return View(repo.GetAll());
+            return View(db.CashRegisters.ToList());
         }
 
         // GET: CashRegister/Details/5
@@ -34,8 +28,7 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //CashRegister cashRegister = db.CashRegisters.Find(id);
-            CashRegister cashRegister = repo.GetById(id);
+            CashRegister cashRegister = db.CashRegisters.Find(id);
             if (cashRegister == null)
             {
                 return HttpNotFound();
@@ -58,10 +51,8 @@ namespace Cinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.CashRegisters.Add(cashRegister);
-                //db.SaveChanges();
-                repo.Insert(cashRegister);
-                repo.Save();
+                db.CashRegisters.Add(cashRegister);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -75,8 +66,7 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //CashRegister cashRegister = db.CashRegisters.Find(id);
-            CashRegister cashRegister = repo.GetById(id);
+            CashRegister cashRegister = db.CashRegisters.Find(id);
             if (cashRegister == null)
             {
                 return HttpNotFound();
@@ -93,10 +83,8 @@ namespace Cinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.Entry(cashRegister).State = EntityState.Modified;
-                //db.SaveChanges();
-                repo.Update(cashRegister);
-                repo.Save();
+                db.Entry(cashRegister).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(cashRegister);
@@ -109,8 +97,7 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //CashRegister cashRegister = db.CashRegisters.Find(id);
-            CashRegister cashRegister = repo.GetById(id);
+            CashRegister cashRegister = db.CashRegisters.Find(id);
             if (cashRegister == null)
             {
                 return HttpNotFound();
@@ -123,11 +110,9 @@ namespace Cinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            //CashRegister cashRegister = db.CashRegisters.Find(id);
-            //db.CashRegisters.Remove(cashRegister);
-            //db.SaveChanges();
-            repo.Delete(id);
-            repo.Save();
+            CashRegister cashRegister = db.CashRegisters.Find(id);
+            db.CashRegisters.Remove(cashRegister);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -135,8 +120,7 @@ namespace Cinema.Controllers
         {
             if (disposing)
             {
-                //db.Dispose();
-                repo.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }

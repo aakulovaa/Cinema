@@ -13,18 +13,12 @@ namespace Cinema.Controllers
 {
     public class HallController : Controller
     {
-        private readonly GenericRepository<Hall> repo;
-        public HallController()
-        {
-            repo = new GenericRepository<Hall>(new CinemaContext());
-        }
-        //private CinemaContext db = new CinemaContext();
+        private CinemaContext db = new CinemaContext();
 
         // GET: Hall
         public ActionResult Index()
         {
-            // return View(db.Halls.ToList());
-            return View(repo.GetAll());
+            return View(db.Halls.ToList());
         }
 
         // GET: Hall/Details/5
@@ -34,8 +28,7 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-           // Hall hall = db.Halls.Find(id);
-            Hall hall = repo.GetById(id);
+            Hall hall = db.Halls.Find(id);
             if (hall == null)
             {
                 return HttpNotFound();
@@ -58,10 +51,8 @@ namespace Cinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.Halls.Add(hall);
-                //db.SaveChanges();
-                repo.Insert(hall);
-                repo.Save();
+                db.Halls.Add(hall);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -75,8 +66,7 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Hall hall = db.Halls.Find(id);
-            Hall hall = repo.GetById(id);
+            Hall hall = db.Halls.Find(id);
             if (hall == null)
             {
                 return HttpNotFound();
@@ -93,10 +83,8 @@ namespace Cinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.Entry(hall).State = EntityState.Modified;
-                //db.SaveChanges();
-                repo.Update(hall);
-                repo.Save();
+                db.Entry(hall).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(hall);
@@ -109,8 +97,7 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Hall hall = db.Halls.Find(id);
-            Hall hall = repo.GetById(id);
+            Hall hall = db.Halls.Find(id);
             if (hall == null)
             {
                 return HttpNotFound();
@@ -123,11 +110,9 @@ namespace Cinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            //Hall hall = db.Halls.Find(id);
-            //db.Halls.Remove(hall);
-            //db.SaveChanges();
-            repo.Delete(id);
-            repo.Save();
+            Hall hall = db.Halls.Find(id);
+            db.Halls.Remove(hall);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -135,8 +120,7 @@ namespace Cinema.Controllers
         {
             if (disposing)
             {
-                //db.Dispose();
-                repo.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }

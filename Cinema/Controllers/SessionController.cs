@@ -13,23 +13,13 @@ namespace Cinema.Controllers
 {
     public class SessionController : Controller
     {
-        //private CinemaContext db = new CinemaContext();
-        private readonly GenericRepository<Session> repo; 
-        private readonly GenericRepository<Hall> hallRepo; 
-        private readonly GenericRepository<Movie> movieRepo; 
-
-        public SessionController()
-        {
-            repo = new GenericRepository<Session>(new CinemaContext()); 
-            hallRepo = new GenericRepository<Hall>(new CinemaContext()); 
-            movieRepo = new GenericRepository<Movie>(new CinemaContext()); 
-        }
+        private CinemaContext db = new CinemaContext();
 
         // GET: Session
         public ActionResult Index()
         {
-            //var sessions = db.Sessions.Include(s => s.Hall).Include(s => s.Movie);
-            return View(repo.GetAll().Include(s => s.Hall).Include(s => s.Movie).ToList()); 
+            var sessions = db.Sessions.Include(s => s.Hall).Include(s => s.Movie);
+            return View(sessions.ToList());
         }
 
         // GET: Session/Details/5
@@ -39,8 +29,7 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Session session = db.Sessions.Find(id);
-            Session session = repo.GetById(id); 
+            Session session = db.Sessions.Find(id);
             if (session == null)
             {
                 return HttpNotFound();
@@ -51,10 +40,8 @@ namespace Cinema.Controllers
         // GET: Session/Create
         public ActionResult Create()
         {
-            //ViewBag.HallId = new SelectList(db.Halls, "Id", "Id");
-            //ViewBag.MovieId = new SelectList(db.Movies, "Id", "MovieName");
-            ViewBag.HallId = new SelectList(hallRepo.GetAll(), "Id", "Id"); 
-            ViewBag.MovieId = new SelectList(movieRepo.GetAll(), "Id", "MovieName"); 
+            ViewBag.HallId = new SelectList(db.Halls, "Id", "Id");
+            ViewBag.MovieId = new SelectList(db.Movies, "Id", "MovieName");
             return View();
         }
 
@@ -67,17 +54,13 @@ namespace Cinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.Sessions.Add(session);
-                //db.SaveChanges();
-                repo.Insert(session); 
-                repo.Save(); 
+                db.Sessions.Add(session);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.HallId = new SelectList(db.Halls, "Id", "Id", session.HallId);
-            //ViewBag.MovieId = new SelectList(db.Movies, "Id", "MovieName", session.MovieId);
-            ViewBag.HallId = new SelectList(hallRepo.GetAll(), "Id", "Id", session.HallId); 
-            ViewBag.MovieId = new SelectList(movieRepo.GetAll(), "Id", "MovieName", session.MovieId); 
+            ViewBag.HallId = new SelectList(db.Halls, "Id", "Id", session.HallId);
+            ViewBag.MovieId = new SelectList(db.Movies, "Id", "MovieName", session.MovieId);
             return View(session);
         }
 
@@ -88,16 +71,13 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Session session = db.Sessions.Find(id);
-            Session session = repo.GetById(id); 
+            Session session = db.Sessions.Find(id);
             if (session == null)
             {
                 return HttpNotFound();
             }
-            //ViewBag.HallId = new SelectList(db.Halls, "Id", "Id", session.HallId);
-            //ViewBag.MovieId = new SelectList(db.Movies, "Id", "MovieName", session.MovieId);
-            ViewBag.HallId = new SelectList(hallRepo.GetAll(), "Id", "Id", session.HallId); 
-            ViewBag.MovieId = new SelectList(movieRepo.GetAll(), "Id", "MovieName", session.MovieId); 
+            ViewBag.HallId = new SelectList(db.Halls, "Id", "Id", session.HallId);
+            ViewBag.MovieId = new SelectList(db.Movies, "Id", "MovieName", session.MovieId);
             return View(session);
         }
 
@@ -110,16 +90,12 @@ namespace Cinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.Entry(session).State = EntityState.Modified;
-                //db.SaveChanges();
-                repo.Update(session); 
-                repo.Save(); 
+                db.Entry(session).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.HallId = new SelectList(db.Halls, "Id", "Id", session.HallId);
-            //ViewBag.MovieId = new SelectList(db.Movies, "Id", "MovieName", session.MovieId);
-            ViewBag.HallId = new SelectList(hallRepo.GetAll(), "Id", "Id", session.HallId); 
-            ViewBag.MovieId = new SelectList(movieRepo.GetAll(), "Id", "MovieName", session.MovieId); 
+            ViewBag.HallId = new SelectList(db.Halls, "Id", "Id", session.HallId);
+            ViewBag.MovieId = new SelectList(db.Movies, "Id", "MovieName", session.MovieId);
             return View(session);
         }
 
@@ -130,8 +106,7 @@ namespace Cinema.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Session session = db.Sessions.Find(id);
-            Session session = repo.GetById(id); 
+            Session session = db.Sessions.Find(id);
             if (session == null)
             {
                 return HttpNotFound();
@@ -144,11 +119,9 @@ namespace Cinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            //Session session = db.Sessions.Find(id);
-            //db.Sessions.Remove(session);
-            //db.SaveChanges();
-            repo.Delete(id); 
-            repo.Save(); 
+            Session session = db.Sessions.Find(id);
+            db.Sessions.Remove(session);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -156,8 +129,7 @@ namespace Cinema.Controllers
         {
             if (disposing)
             {
-                //db.Dispose();
-                repo.Dispose(); 
+                db.Dispose();
             }
             base.Dispose(disposing);
         }
