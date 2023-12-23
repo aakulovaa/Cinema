@@ -16,18 +16,20 @@ namespace Cinema.Controllers
         //private CinemaContext db = new CinemaContext();
         private readonly GenericRepository<People> repo;
         private readonly GenericRepository<TicketSold> TicketRepo;
+        private readonly GenericRepository<Session> sessionRepo;
 
         public PeopleController()
         {
             repo = new GenericRepository<People>(new CinemaContext());
             TicketRepo = new GenericRepository<TicketSold>(new CinemaContext());
+            sessionRepo = new GenericRepository<Session>(new CinemaContext());
         }
 
         // GET: People
         public ActionResult Index()
         {
             //var peoples = db.Peoples.Include(p => p.TicketSold);
-            return View(repo.GetAll().Include(p => p.TicketSold).ToList());
+            return View(repo.GetAll().Include(p => p.TicketSold).Include(p => p.Sessions).ToList());
         }
 
         // GET: People/Details/5
@@ -38,7 +40,8 @@ namespace Cinema.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //People people = db.Peoples.Find(id);
-            People people = repo.GetById(id);
+            // People people = repo.GetById(id);
+            People people = repo.GetAll().Include(p => p.TicketSold).Include(p => p.Sessions).SingleOrDefault(o => o.Id == id);
             if (people == null)
             {
                 return HttpNotFound();

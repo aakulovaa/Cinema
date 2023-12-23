@@ -33,7 +33,29 @@
         <dd>
             @Html.DisplayFor(model => model.StartDateTime)
         </dd>
+        <dd>
+            @if (Model.Peoples != null && Model.Peoples.Any())
+            {
+                <table class="table">
+                    <tr>
+                        <th>People Name</th>
+                        <th>People Last Nmae</th>
+                    </tr>
+                    @foreach (var people in Model.Peoples)
+                    {
+                        <tr>
+                            <td>@people.FirstName</td>
+                            <td>@people.LastName</td>
 
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No people.</p>
+            }
+        </dd>
     </dl>
 </div>
 <p>

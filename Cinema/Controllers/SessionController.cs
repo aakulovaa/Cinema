@@ -17,19 +17,21 @@ namespace Cinema.Controllers
         private readonly GenericRepository<Session> repo;
         private readonly GenericRepository<Hall> hallRepo;
         private readonly GenericRepository<Movie> movieRepo;
+        private readonly GenericRepository<People> peopleRepo;
 
         public SessionController()
         {
             repo = new GenericRepository<Session>(new CinemaContext());
             hallRepo = new GenericRepository<Hall>(new CinemaContext());
             movieRepo = new GenericRepository<Movie>(new CinemaContext());
+            peopleRepo = new GenericRepository<People>(new CinemaContext());
         }
 
         // GET: Session
         public ActionResult Index()
         {
             //var sessions = db.Sessions.Include(s => s.Hall).Include(s => s.Movie);
-            return View(repo.GetAll().Include(s => s.Hall).Include(s => s.Movie).ToList());
+            return View(repo.GetAll().Include(s => s.Hall).Include(s => s.Movie).Include(s => s.Peoples).ToList());
         }
 
         // GET: Session/Details/5
@@ -40,7 +42,8 @@ namespace Cinema.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //Session session = db.Sessions.Find(id);
-            Session session = repo.GetById(id);
+            //Session session = repo.GetById(id);
+            Session session = repo.GetAll().Include(s => s.Hall).Include(s => s.Movie).Include(s => s.Peoples).SingleOrDefault(o => o.Id == id);
             if (session == null)
             {
                 return HttpNotFound();
