@@ -4,14 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - приложение ASP.NET</title>
+    <title>@ViewBag.Title - Cinema</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Cinema", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Переключить навигацию" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -20,7 +20,12 @@
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Домашняя страница", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Информация", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Связаться", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Movies", "Index", "Movie", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Sessions", "Index", "Session", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Halls", "Index", "Hall", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("TicketSolds", "Index", "TicketSold", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("CashRegisters", "Index", "CashRegister", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Peoples", "Index", "People", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
             </div>
         </div>
@@ -29,7 +34,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - мое приложение ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year - Cinema</p>
         </footer>
     </div>
 

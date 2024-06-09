@@ -1,0 +1,42 @@
+﻿@model Cinema.Models.CashRegister
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CashRegister</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StartWorking)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartWorking)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndWorking)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndWorking)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

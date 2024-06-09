@@ -1,0 +1,64 @@
+﻿@model Cinema.Models.Session
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Session</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Hall.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hall.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Movie.MovieName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Movie.MovieName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDateTime)
+        </dd>
+        <dd>
+            @if (Model.Peoples != null && Model.Peoples.Any())
+            {
+                <table class="table">
+                    <tr>
+                        <th>People Name</th>
+                        <th>People Last Nmae</th>
+                    </tr>
+                    @foreach (var people in Model.Peoples)
+                    {
+                        <tr>
+                            <td>@people.FirstName</td>
+                            <td>@people.LastName</td>
+
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No people.</p>
+            }
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
